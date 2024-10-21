@@ -1,0 +1,9 @@
+services:
+  db:
+    image: postgres:14
+    container_name: postgres_db
+    environment:
+      - POSTGRES_USER=danilkompaniets
+      - POSTGRES_PASSWORD=Danone0502603734!
+    ports:
+      - 5432:5432
