@@ -15,8 +15,8 @@ import {z} from "zod";
 import {Input} from "@/components/ui/input.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "@/app/store.ts";
-import {loginUser} from "@/app/features/auth/authActions.ts";
-import {selectAuthState} from "@/app/features/auth/authSlice.ts";
+import {selectAuthState} from "@/features/auth/authSlice.ts";
+import {useLoginUserMutation} from "@/features/auth/authApiSlice.ts";
 
 const formSchema = z.object({
     username: z
@@ -28,6 +28,7 @@ const formSchema = z.object({
 });
 
 const LoginPage: FC = () => {
+    const [loginUser, {isSuccess}] = useLoginUserMutation();
     const {userInfo, success} = useSelector(selectAuthState)
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>();
@@ -41,14 +42,14 @@ const LoginPage: FC = () => {
     });
 
     useEffect(() => {
-        if (success || userInfo !== null) {
+        if (isSuccess || userInfo !== null) {
             navigate("/dashboard")
         }
-    }, [userInfo, success, navigate]);
+    }, [userInfo, isSuccess, navigate]);
 
     async function handleSubmit(values: z.infer<typeof formSchema>) {
         try {
-            dispatch(loginUser(values)).unwrap()
+            loginUser(values).unwrap();
         } catch (error: any) {
             if (error?.response?.data?.errors) {
                 const errors = error.response.data.errors;

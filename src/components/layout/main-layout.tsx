@@ -10,7 +10,7 @@ import SidebarFriendsSearch from "./sidebar-friends-search";
 import {LogOut} from "lucide-react";
 import {Button} from "../ui/button";
 import {useDispatch} from "react-redux";
-import {logout} from "@/app/features/auth/authSlice.ts";
+import {logout} from "@/features/auth/authSlice.ts";
 
 const MainLayout = () => {
     const dispatch = useDispatch();

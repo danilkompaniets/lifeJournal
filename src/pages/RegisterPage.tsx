@@ -15,11 +15,10 @@ import {useForm} from "react-hook-form";
 
 import {Link, useNavigate} from "react-router-dom";
 
-import {useDispatch, useSelector} from "react-redux";
-import {selectAuthState} from "@/app/features/auth/authSlice.ts";
-import {registerUser} from "@/app/features/auth/authActions.ts";
-import {AppDispatch} from "@/app/store.ts";
+import {useSelector} from "react-redux";
+import {selectAuthState} from "@/features/auth/authSlice.ts";
 import {useEffect} from "react";
+import {useRegisterUserMutation} from "@/features/auth/authApiSlice.ts";
 
 const formSchema = z.object({
     email: z.string().min(6, {message: "Email must be at least 6 characters."}),
@@ -32,9 +31,8 @@ const formSchema = z.object({
 });
 
 const RegisterPage = () => {
-    const {userInfo, success} = useSelector(selectAuthState);
-
-    const dispatch = useDispatch<AppDispatch>();
+    const [registerUser, {isSuccess}] = useRegisterUserMutation();
+    const {userInfo} = useSelector(selectAuthState);
     const navigate = useNavigate();
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -46,11 +44,16 @@ const RegisterPage = () => {
         },
     });
 
+    useEffect(() => {
+        if (isSuccess) navigate("/login");
+    }, [navigate, userInfo, isSuccess]);
+
     const inputs = ["email", "password", "username"];
+
 
     function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            dispatch(registerUser(values)).unwrap();
+            registerUser(values).unwrap()
         } catch (error: any) {
             if (error?.response?.data?.errors) {
                 const errors = error.response.data.errors;
@@ -69,10 +72,6 @@ const RegisterPage = () => {
             }
         }
     }
-
-    useEffect(() => {
-        if (success) navigate("/login");
-    }, [navigate, userInfo, success]);
 
     return (
         <div className="flex flex-col items-center justify-center h-screen">

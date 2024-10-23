@@ -43,14 +43,5 @@ const baseQueryWithRefetch: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQu
 export const authApi = createApi({
     reducerPath: "api/auth",
     baseQuery: baseQueryWithRefetch,
-    endpoints: (builder) => ({
-        getUserDetails: builder.query({
-            query: () => ({
-                url: "/user/my-profile",
-                method: "GET",
-            })
-        })
-    }),
+    endpoints: () => ({}),
 });
-
-export const {useGetUserDetailsQuery} = authApi;

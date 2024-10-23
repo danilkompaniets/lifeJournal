@@ -1,10 +1,10 @@
 import {useDispatch, useSelector} from "react-redux";
 import {Outlet, NavLink} from "react-router-dom";
-import {selectAuthState, setCredentials} from "@/app/features/auth/authSlice.ts";
-import {useGetUserDetailsQuery} from "@/app/services/auth/authService.ts";
+import {selectAuthState, setCredentials} from "@/features/auth/authSlice.ts";
 import {useEffect} from "react";
+import {useGetUserDetailsQuery} from "@/features/auth/authApiSlice.ts";
 
-function ProtectedPage() {
+function ProtectedRoute() {
     const dispatch = useDispatch()
 
     // automatically authenticate user if token is found
@@ -18,7 +18,7 @@ function ProtectedPage() {
 
     const {userInfo} = useSelector(selectAuthState)
 
-    if (!userInfo) {
+    if (!userInfo && !isLoading) {
         return (
             <div>
                 <h1>Unauthorized :(</h1>
@@ -34,4 +34,4 @@ function ProtectedPage() {
     return <Outlet/>
 }
 
-export default ProtectedPage;
+export default ProtectedRoute;
