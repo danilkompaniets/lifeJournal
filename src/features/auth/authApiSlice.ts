@@ -1,4 +1,4 @@
-import {authApi} from "@/services/auth/authService.ts";
+import {authApi} from "@/services/authService.ts";
 
 export const authApiSlice = authApi.injectEndpoints({
     endpoints: (builder) => ({

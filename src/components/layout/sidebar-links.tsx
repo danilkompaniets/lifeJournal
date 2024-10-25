@@ -9,10 +9,11 @@ const links = [
 const SidebarLinks = () => {
     return (
         <div className="w-full flex flex-col gap-2 mt-4 px-4">
-            {links.map((link,) => (
+            {links.map((link, id,) => (
                 <Link
                     className="w-full px-3 py-2 border border-neutral-100 rounded-md hover:bg-neutral-100/50 transition-all"
                     to={link.href}
+                    key={id}
                 >
                     {link.title}
                 </Link>

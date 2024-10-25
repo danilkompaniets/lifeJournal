@@ -9,23 +9,22 @@ const baseQuery = fetchBaseQuery({
     baseUrl,
     prepareHeaders: (headers, {getState}: { getState: () => RootState }) => {
         const token = getState().auth.accessToken;
-
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
         }
-
         return headers;
     },
     credentials: 'include'
 });
 
-const baseQueryWithRefetch: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
+export const baseQueryWithRefetch: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions);
 
     if (result.error && result.error.status === 401) {
         try {
-            const refreshResponse = await apiClient.post('/auth/refresh-token');
+            const refreshResponse = await apiClient.post('/auth/refresh-token', {withCredentials: true});
             const newToken = refreshResponse.data;
+            console.log("failed to send req, refetching token")
 
             console.log(refreshResponse);
 

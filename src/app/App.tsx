@@ -2,7 +2,7 @@ import {FC} from "react";
 import {Route, Routes} from "react-router-dom";
 import LoginPage from "@/pages/LoginPage.tsx";
 import RegisterPage from "@/pages/RegisterPage.tsx";
-import HomePage from "@/features/dayResults/HomePage.tsx";
+import HomePage from "@/pages/HomePage.tsx";
 import MainLayout from "../components/layout/main-layout.tsx";
 import MyProfile from "@/features/userProfile/MyProfile.tsx";
 import Dashboard from "@/components/Dashboard.tsx";

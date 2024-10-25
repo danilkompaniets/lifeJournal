@@ -50,7 +50,6 @@ const RegisterPage = () => {
 
     const inputs = ["email", "password", "username"];
 
-
     function onSubmit(values: z.infer<typeof formSchema>) {
         try {
             registerUser(values).unwrap()

@@ -12,11 +12,13 @@ function ProtectedRoute() {
         pollingInterval: 600000
     })
 
+
     useEffect(() => {
         if (data && !isLoading) dispatch(setCredentials(data))
     }, [data, dispatch])
 
     const {userInfo} = useSelector(selectAuthState)
+
 
     if (!userInfo && !isLoading) {
         return (

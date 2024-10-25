@@ -17,6 +17,8 @@ interface AuthState {
     accessToken: string | null;
     error: null | unknown | string;
     success: boolean;
+    dayResults: [],
+    goalsHeaders: []
 }
 
 const initialState: AuthState = {
@@ -25,6 +27,8 @@ const initialState: AuthState = {
     accessToken: accessToken,
     error: null,
     success: false,
+    dayResults: [],
+    goalsHeaders: []
 };
 
 export const authSlice = createSlice(
