@@ -31,7 +31,8 @@ interface DataTableProps<TData> {
     data: TData[];
     dayResults: any[]
     goalsHeaders: any[],
-    userId: bigint
+    userId: bigint,
+    dayResultsRefetch: () => void
 }
 
 const date = new Date().toLocaleDateString();
@@ -41,9 +42,9 @@ export function DataTable<TData>({
                                      data,
                                      dayResults,
                                      goalsHeaders,
-                                     userId
+                                     userId,
+                                     dayResultsRefetch
                                  }: DataTableProps<TData>) {
-
     const [activeGoalId, setActiveGoalId] = useState()
     const [addGoal] = useAddGoalMutation();
     const [deleteGoal] = useDeleteGoalMutation();
@@ -89,6 +90,7 @@ export function DataTable<TData>({
             addNewDayResult({userId: userId, data: newDayResult})
             setIsAddingTask(false);
             clearForm()
+            dayResultsRefetch()
         } else {
             setIsAddingTask(true);
         }
@@ -135,11 +137,11 @@ export function DataTable<TData>({
                                                 {goalHeader.id === activeGoalId &&
                                                     (
                                                         <div
-                                                            className={"absolute top-10 flex gap-x-2 p-2 bg-white border border-zinc-100 rounded-md"}>
+                                                            className={"absolute z-40 top-10 flex gap-x-2 p-2 bg-white border border-zinc-100 rounded-md"}>
                                                             <Button
                                                                 onClick={() => {
-                                                                    console.log(goalHeader.id)
                                                                     deleteGoal(goalHeader.id.toString())
+                                                                    dayResultsRefetch()
                                                                 }}
                                                                 className={"flex items-center justify-center hover:text-red-600"}
                                                                 variant={"ghost"}>
@@ -207,6 +209,5 @@ export function DataTable<TData>({
                 </Table>
             </div>
         </div>
-
     );
 }

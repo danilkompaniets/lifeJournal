@@ -1,7 +1,5 @@
 import {DataTable} from "@/components/tasks/data-table.tsx";
-import {
-    useGetGoalsHeadersByUserIdQuery
-} from "@/features/goals/goalsApiSlice.ts";
+import {useGetGoalsHeadersByUserIdQuery} from "@/features/goals/goalsApiSlice.ts";
 import {useGetUserDetailsQuery} from "@/features/auth/authApiSlice.ts";
 import {useGetDayResultsByUserIdQuery} from "@/features/dayResults/dayResultsApiSlice.ts";
 
@@ -14,6 +12,7 @@ const HomePage = () => {
     const {
         data: dayResults,
         isLoading: isDayResultsLoading,
+        refetch: dayResultsRefetch
     } = useGetDayResultsByUserIdQuery(userInfo?.id, {skip: isUserLoading || !userInfo})
 
     const {
@@ -35,6 +34,7 @@ const HomePage = () => {
                 <DataTable
                     data={[]}
                     dayResults={dayResults}
+                    dayResultsRefetch={dayResultsRefetch}
                     goalsHeaders={goalsHeaders}
                     userId={userInfo.id}
                 />

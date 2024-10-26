@@ -1,4 +1,4 @@
-import {createApi, fetchBaseQuery, BaseQueryFn} from "@reduxjs/toolkit/query/react";
+import {BaseQueryFn, createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {RootState} from "@/app/store.ts";
 import {FetchArgs, FetchBaseQueryError} from '@reduxjs/toolkit/query';
 import {apiClient} from "@/utils/apiClient.ts";
@@ -9,8 +9,11 @@ const baseQuery = fetchBaseQuery({
     baseUrl,
     prepareHeaders: (headers, {getState}: { getState: () => RootState }) => {
         const token = getState().auth.accessToken;
-        if (token) {
+        if (token !== null && token) {
             headers.set('Authorization', `Bearer ${token}`);
+        } else {
+            headers.delete("Authorization");
+            console.log("removed")
         }
         return headers;
     },
@@ -43,4 +46,5 @@ export const authApi = createApi({
     reducerPath: "api/auth",
     baseQuery: baseQueryWithRefetch,
     endpoints: () => ({}),
+    tagTypes: ["friends"]
 });

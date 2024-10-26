@@ -14,7 +14,10 @@ export const dayResultsApiSlice = dayResultsApi.injectEndpoints({
                 url: `/tasks/getAllDayResults/${userId}`,
                 method: "GET",
             }),
-            providesTags: (result) => [{type: "dayResults", id: "LIST"}],
+            // Apply sorting in descending order by date
+            transformResponse: (response: DayResult[]) =>
+                response.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
+            providesTags: [{type: "dayResults", id: "LIST"}],
         }),
         addNewFilledDayResult: builder.mutation({
             query: ({userId, data}) => ({

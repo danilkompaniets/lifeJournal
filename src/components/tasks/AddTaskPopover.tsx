@@ -10,15 +10,17 @@ import {useState} from "react";
 import {useSelector} from "react-redux";
 import {selectAuthState} from "@/features/auth/authSlice.ts";
 
-const AddTaskPopover = ({addGoal}: { addGoal: ({userId: bigint, title: string}) => void }) => {
+const AddTaskPopover = ({addGoal}: {
+    addGoal: ({userId: bigint, title: string}) => void,
+}) => {
     const {userInfo} = useSelector(selectAuthState)
     const [title, setTitle] = useState("");
 
     const handleSubmit = () => {
         const userId = userInfo?.id
         if (title != "") {
-            console.log({userId, title})
             addGoal({userId, title})
+            setTitle("")
         }
         console.log(userInfo)
     }

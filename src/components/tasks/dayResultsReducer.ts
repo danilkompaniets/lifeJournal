@@ -1,8 +1,10 @@
-export const initialNewDayResult = (goals: any[]) => ({
-    title: "",
-    description: "",
-    goals,
-});
+export const initialNewDayResult = (goals: any[]) => {
+    return ({
+        title: "",
+        description: "",
+        goals,
+    });
+}
 
 export const dayResultsReducer = (state: any, action: any) => {
     switch (action.type) {

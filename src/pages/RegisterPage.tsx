@@ -19,6 +19,7 @@ import {useSelector} from "react-redux";
 import {selectAuthState} from "@/features/auth/authSlice.ts";
 import {useEffect} from "react";
 import {useRegisterUserMutation} from "@/features/auth/authApiSlice.ts";
+import {PasswordInput} from "@/components/ui/password-input.tsx";
 
 const formSchema = z.object({
     email: z.string().min(6, {message: "Email must be at least 6 characters."}),
@@ -88,7 +89,12 @@ const RegisterPage = () => {
                                             {name.charAt(0).toUpperCase() + name.slice(1)}
                                         </FormLabel>
                                         <FormControl>
-                                            <Input placeholder="" {...field} />
+                                            {
+                                                name === "password" ? (
+                                                        <PasswordInput placeholder={""} {...field} />
+                                                    ) :
+                                                    (<Input placeholder="" {...field} />)
+                                            }
                                         </FormControl>
                                         <FormMessage/>
                                     </FormItem>

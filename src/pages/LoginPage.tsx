@@ -16,6 +16,7 @@ import {Input} from "@/components/ui/input.tsx";
 import {useSelector} from "react-redux";
 import {selectAuthState} from "@/features/auth/authSlice.ts";
 import {useLoginUserMutation} from "@/features/auth/authApiSlice.ts";
+import {PasswordInput} from "@/components/ui/password-input.tsx";
 
 const formSchema = z.object({
     username: z
@@ -95,7 +96,7 @@ const LoginPage: FC = () => {
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="" {...field} />
+                                        <PasswordInput placeholder="" {...field} />
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>

@@ -9,12 +9,10 @@ const store = configureStore({
         auth: authSlice.reducer,
         [authApi.reducerPath]: authApi.reducer,
         [dayResultsApi.reducerPath]: dayResultsApi.reducer,
-        [goalsApi.reducerPath]: goalsApi.reducer,
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware()
         .concat(authApi.middleware)
         .concat(dayResultsApi.middleware)
-        .concat(goalsApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

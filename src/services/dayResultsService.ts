@@ -5,5 +5,5 @@ export const dayResultsApi = createApi({
     reducerPath: "api/dayResults",
     baseQuery: baseQueryWithRefetch,
     endpoints: () => ({}),
-    tagTypes: ["dayResults"]
+    tagTypes: ["dayResults", "goalsHeaders"]
 });

@@ -1,6 +1,6 @@
-import {goalsApi} from "@/services/goalsService.ts";
+import {dayResultsApi} from "@/services/dayResultsService.ts";
 
-const goalsApiSlice = goalsApi.injectEndpoints({
+const goalsApiSlice = dayResultsApi.injectEndpoints({
     endpoints: (builder) => ({
         getGoalsHeadersByUserId: builder.query({
             query: (userId) => ({
@@ -18,14 +18,14 @@ const goalsApiSlice = goalsApi.injectEndpoints({
                     title
                 },
             }),
-            invalidatesTags: ["goalsHeaders"],
+            invalidatesTags: ["goalsHeaders", "dayResults"],
         }),
         deleteGoal: builder.mutation({
             query: (goalId) => ({
                 url: `/goals/deleteGoal/${goalId}`,
                 method: "DELETE",
             }),
-            invalidatesTags: ["goalsHeaders"],
+            invalidatesTags: ["goalsHeaders", "dayResults"],
         }),
     }),
 });
