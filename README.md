@@ -34,3 +34,8 @@
 ---
 
 **LifeJournal** — это приложение, которое помогает упорядочить жизнь, добиться большего и радоваться своим успехам.  
+
+<img width="1512" alt="Снимок экрана 2024-11-22 в 22 50 54" src="https://github.com/user-attachments/assets/afccd03e-fe47-4b9f-bd9a-fcc571a6dd8e">
+<img width="1512" alt="Снимок экрана 2024-11-22 в 22 52 47" src="https://github.com/user-attachments/assets/dda4b185-95ab-46e2-a750-5c706ab781cc">
+<img width="1512" alt="Снимок экрана 2024-11-22 ![Uploading Снимок экрана 2024-11-22 в 22.50.54.png…]()
+в 22 52 53" src="https://github.com/user-attachments/assets/45d299c7-8c6e-48ab-a0f2-9cccb5828f73">
