@@ -1,8 +1,8 @@
 import {useDispatch, useSelector} from "react-redux";
-import {Outlet, NavLink} from "react-router-dom";
+import {NavLink, Outlet} from "react-router-dom";
 import {selectAuthState, setCredentials} from "@/features/auth/authSlice.ts";
 import {useEffect} from "react";
-import {useGetUserDetailsQuery} from "@/features/auth/authApiSlice.ts";
+import {useGetUserDetailsQuery} from "@/features/userProfile/usersApiSlice.ts";
 
 function ProtectedRoute() {
     const dispatch = useDispatch()

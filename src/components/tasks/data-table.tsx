@@ -1,26 +1,14 @@
 "use client";
 
-import {
-    ColumnDef,
-    flexRender,
-    getCoreRowModel,
-    useReactTable,
-} from "@tanstack/react-table";
+import {flexRender, getCoreRowModel, useReactTable,} from "@tanstack/react-table";
 
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table";
 import {Input} from "../ui/input";
 import {Textarea} from "../ui/textarea";
 import AddTaskPopover from "./AddTaskPopover";
-import {useReducer, useState} from "react";
+import {useEffect, useReducer, useState} from "react";
 import {Button} from "@/components/ui/button.tsx";
-import {DeleteIcon} from "lucide-react";
+import {ArrowLeftIcon, DeleteIcon} from "lucide-react";
 import {useAddGoalMutation, useDeleteGoalMutation} from "@/features/goals/goalsApiSlice.ts";
 import {useAddNewFilledDayResultMutation} from "@/features/dayResults/dayResultsApiSlice.ts";
 import {dayResultsReducer, initialNewDayResult} from "@/components/tasks/dayResultsReducer.ts";
@@ -32,7 +20,7 @@ interface DataTableProps<TData> {
     dayResults: any[]
     goalsHeaders: any[],
     userId: bigint,
-    dayResultsRefetch: () => void
+    dayResultsRefetch: () => void,
 }
 
 const date = new Date().toLocaleDateString();
@@ -43,12 +31,13 @@ export function DataTable<TData>({
                                      dayResults,
                                      goalsHeaders,
                                      userId,
-                                     dayResultsRefetch
+                                     dayResultsRefetch,
                                  }: DataTableProps<TData>) {
     const [activeGoalId, setActiveGoalId] = useState()
     const [addGoal] = useAddGoalMutation();
     const [deleteGoal] = useDeleteGoalMutation();
     const [addNewDayResult] = useAddNewFilledDayResultMutation();
+    const [error, setError] = useState<string | null>(null);
 
     const [isAddingTask, setIsAddingTask] = useState(false)
 
@@ -75,6 +64,12 @@ export function DataTable<TData>({
 
     const [newDayResult, dispatch] = useReducer(dayResultsReducer, initialNewDayResult(goalsHeaders));
 
+    useEffect(() => {
+        newDayResult.goals = [...goalsHeaders];
+    }, [goalsHeaders]);
+
+    console.log(newDayResult);
+
     const changeTitle = (title: string) => dispatch({type: "changedTitle", title});
     const changeDescription = (description: string) => dispatch({type: "changedDescription", description});
     const changeCompletedGoal = (goalId: bigint, state: boolean) => dispatch({
@@ -86,11 +81,15 @@ export function DataTable<TData>({
 
 
     const handleAddingNewTask = () => {
-        if (isAddingTask) {
+        if (isAddingTask && newDayResult.title.length > 0 && newDayResult.description.length > 0) {
             addNewDayResult({userId: userId, data: newDayResult})
             setIsAddingTask(false);
+            setError(null);
             clearForm()
             dayResultsRefetch()
+        }
+        if ((newDayResult.title.length == 0 || newDayResult.description.length == 0) && isAddingTask) {
+            setError("You cannot leave title or description empty.")
         } else {
             setIsAddingTask(true);
         }
@@ -98,11 +97,27 @@ export function DataTable<TData>({
 
     return (
         <div>
-            <Button className={"mb-2"} onClick={handleAddingNewTask}>
+            <div className={"flex gap-x-2"}>
+                <Button className={"mb-2"} onClick={handleAddingNewTask}>
+                    {
+                        isAddingTask ? "Save" : "Add Task"
+                    }
+                </Button>
                 {
-                    isAddingTask ? "Save" : "Add Task"
+                    isAddingTask && (
+                        <Button className={"mb-2"} variant={"destructive"} onClick={() => setIsAddingTask(false)}>
+                            <ArrowLeftIcon/>
+                        </Button>
+                    )
                 }
-            </Button>
+                {
+                    error != null && (
+                        <div className="flex items-center justify-center bg-red-100 rounded-md px-2">
+                            <p>{error}</p>
+                        </div>
+                    )
+                }
+            </div>
             <div className="rounded-md border w-full">
                 <Table>
                     <TableHeader className="">
@@ -180,7 +195,9 @@ export function DataTable<TData>({
                                             onChange={(e) => changeDescription(e.target.value)}
                                         />
                                     </TableCell>
+
                                     <GoalsCheckboxes goals={newDayResult.goals} changeCompletedGoal={changeCompletedGoal}/>
+                                    <TableCell/>
                                 </TableRow>
                             )
                         }
@@ -202,6 +219,8 @@ export function DataTable<TData>({
                                             <Checkbox disabled={true} checked={goal.completed}/>
                                         </TableCell>
                                     ))}
+                                    <TableCell/>
+
                                 </TableRow>
                             )
                         })}

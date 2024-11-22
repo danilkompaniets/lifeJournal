@@ -1,15 +1,8 @@
 import {Avatar, AvatarImage} from "@/components/ui/avatar";
-import {Home, UserRoundIcon} from "lucide-react";
-import {Button} from "../ui/button";
-import {Link} from "react-router-dom";
+import {UserRoundIcon} from "lucide-react";
+
 import {useSelector} from "react-redux";
 import {selectAuthState} from "@/features/auth/authSlice.ts";
-
-const userData = {
-    fullName: "Danil Kompaniets",
-    email: "kompaniets1592925@gmail.com",
-    image: "https://github.com/shadcn.png",
-};
 
 const ProfileHeader = ({isCollapsed}: { isCollapsed: boolean }) => {
     const {userInfo, loading} = useSelector(selectAuthState)

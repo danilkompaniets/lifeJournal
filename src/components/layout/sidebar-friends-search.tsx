@@ -1,16 +1,24 @@
 import {UserCogIcon} from "lucide-react";
 import {Input} from "../ui/input";
 import {Button} from "../ui/button";
-import {useSearchForUserQuery} from "@/features/friends/friendsApiSlice.ts";
+
 import {useState} from "react";
 import {Avatar, AvatarImage} from "@/components/ui/avatar.tsx";
+import {useNavigate} from "react-router-dom";
+import {useSearchForUserQuery} from "@/features/userProfile/usersApiSlice.ts";
 
 const SidebarFriendsSearch = () => {
     const [username, setUsername] = useState("");
     const [isCanceled, setIsCanceled] = useState(true);
-    const {data, isLoading} = useSearchForUserQuery(username, {skip: username == ""})
+    const {data} = useSearchForUserQuery(username, {skip: username == ""})
 
-    const FriendCard = ({username, email, imageUrl}) => {
+    const FriendCard = ({username, email, imageUrl, id}: {
+        username: string,
+        email: string,
+        imageUrl: string,
+        id: string
+    }) => {
+        const navigate = useNavigate();
         return (
             <>
                 <div className={"px-2 py-2 rounded-md"}>
@@ -30,7 +38,11 @@ const SidebarFriendsSearch = () => {
                     <p className={"text-sm"}>
                         {email}
                     </p>
-                    <Button className={"text-sm font-medium h-8 py-2 w-full mt-2"}>
+                    <Button
+                        onClick={() => {
+                            navigate(`/dashboard/user/${id}`);
+                        }}
+                        className={"text-sm font-medium h-8 py-2 w-full mt-2"}>
                         View profile
                     </Button>
                 </div>
@@ -59,12 +71,11 @@ const SidebarFriendsSearch = () => {
                         {
                             data.map((friend) =>
                                 (
-                                    <FriendCard key={friend.id} username={friend.username} email={friend.email}
-                                                imageUrl={friend.imageUrl}/>
+                                    <FriendCard
+                                        key={friend.id} {...friend}/>
                                 ))
                         }
                     </div>
-
                 )
             }
         </div>

@@ -1,11 +1,9 @@
 import {Link} from "react-router-dom";
-import {ChartScatterIcon, HomeIcon, LayoutDashboardIcon, Users2Icon} from "lucide-react";
+import {LayoutDashboardIcon, Users2Icon} from "lucide-react";
 
 
 const links = [
     {href: "/dashboard", title: "Dashboard", icon: <LayoutDashboardIcon/>},
-    {href: "/dashboard/results", title: "Results", icon: <ChartScatterIcon/>},
-    {href: "/dashboard/my-profile", title: "My Profile", icon: <HomeIcon/>},
     {href: "/dashboard/friends", title: "Friends", icon: <Users2Icon/>},
 ];
 

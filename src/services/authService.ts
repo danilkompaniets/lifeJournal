@@ -42,9 +42,9 @@ export const baseQueryWithRefetch: BaseQueryFn<string | FetchArgs, unknown, Fetc
 
     return result;
 };
+
 export const authApi = createApi({
     reducerPath: "api/auth",
     baseQuery: baseQueryWithRefetch,
     endpoints: () => ({}),
-    tagTypes: ["friends"]
 });

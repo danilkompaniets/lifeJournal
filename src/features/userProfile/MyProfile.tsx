@@ -1,5 +1,10 @@
+import {useGetUserDetailsQuery} from "@/features/userProfile/usersApiSlice.ts";
+
 const MyProfile = () => {
-  return <div></div>;
+  const userDetails = useGetUserDetailsQuery("userDetails");
+  return (<div>
+
+  </div>);
 };
 
 export default MyProfile;

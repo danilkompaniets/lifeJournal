@@ -1,12 +1,5 @@
 import {Button} from "@/components/ui/button.tsx";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form.tsx";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form.tsx";
 import {Input} from "@/components/ui/input.tsx";
 
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -21,6 +14,7 @@ import {useEffect} from "react";
 import {useRegisterUserMutation} from "@/features/auth/authApiSlice.ts";
 import {PasswordInput} from "@/components/ui/password-input.tsx";
 
+
 const formSchema = z.object({
     email: z.string().min(6, {message: "Email must be at least 6 characters."}),
     password: z.string().min(6, {
@@ -32,7 +26,7 @@ const formSchema = z.object({
 });
 
 const RegisterPage = () => {
-    const [registerUser, {isSuccess}] = useRegisterUserMutation();
+    const [registerUser, {isSuccess, isError, error}] = useRegisterUserMutation();
     const {userInfo} = useSelector(selectAuthState);
     const navigate = useNavigate();
 
@@ -104,6 +98,9 @@ const RegisterPage = () => {
                         <Button type="submit">Register</Button>
                     </form>
                 </Form>
+                <p className={"text-red-600"}>
+                    {isError && error.data}
+                </p>
 
                 <p>
                     Alredy registred?{" "}

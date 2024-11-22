@@ -3,7 +3,8 @@ import {
     SidebarContent,
     SidebarFooter,
     SidebarGroup,
-    SidebarHeader, SidebarTrigger,
+    SidebarHeader,
+    SidebarTrigger,
 } from "@/components/ui/sidebar"
 
 import ProfileHeader from "./ProfileHeader.tsx";

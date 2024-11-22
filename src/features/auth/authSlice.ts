@@ -61,4 +61,4 @@ export const authSlice = createSlice(
 
 export const selectAuthState = (state: RootState): AuthState => state.auth;
 
-export const {logout, setCredentials, removeAccessToken, setAccessToken} = authSlice.actions;
+export const {logout, setCredentials} = authSlice.actions;
